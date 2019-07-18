@@ -3,30 +3,26 @@ class Parking{
  
     // database connection and table name
     private $conn;
-    private $table_name = "parking";
+    private $table_name = "parkering_jkpg";
  
     // object properties
     public $id;
+    public $datetime;
     public $name;
-    public $description;
+    public $occupancy;
+    public $maxoccupancy;
+    public $marginal;
+    public $hysteres;
+    public $active;
  
-    // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
 
     function read(){
-        // select all query
-        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created 
-                FROM " . $this->table_name . " p
-                ORDER BY p.created DESC";
-     
-        // prepare query statement
+        $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
-     
-        // execute query
         $stmt->execute();
-     
         return $stmt;
     }    
 }
