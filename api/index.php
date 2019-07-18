@@ -3,31 +3,38 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 //debug <--
-#TODO: add authentication https://www.codeofaninja.com/2018/09/rest-api-authentication-example-php-jwt-tutorial.html
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once 'config/database.php';
 include_once 'objects/parking.php';
 
-#TODO: Better http response codes
 if (!isset($_GET)) {
-    http_response_code(503);
+    http_response_code(400);
     echo json_encode(
-        array("message" => "No results found.")
+        array("message" => "Onlty GET requests allowed.")
     );
     die();
 }
 if (count($_GET) == 0) {
-    http_response_code(503);
+    http_response_code(400);
     echo json_encode(
-        array("message" => "No results found.")
+        array("message" => "No parameters supplied.")
     );
 }
-
-#TODO: Sanitize user input
-//htmlspecialchars(strip_tags($keywords));
-#TODO: Collect params
+$valid_parms = array("limit", "fromDatetime", "toDatetime", "name", "orderby");
+$filters = $valid_parms;
+foreach (array_keys($_POST) as $key => $value) {
+    if (!in_array($key, $valid_parms)) {        
+        http_response_code(400);
+        echo json_encode(
+            array("message" => "Parameter {$key} not supported.")
+        );
+        die();
+    } else {
+        $filters[$key] = htmlspecialchars(strip_tags($value));
+    }
+}
 
 $database = new Database();
 $db = $database->getConnection();
@@ -45,8 +52,13 @@ if($num > 0){
         extract($row);
         $parking_area = array(
             "id" => $id,
+            "datatime" => $datetime,
             "name" => $name,
-            "description" => html_entity_decode($description),
+            "occupancy" => $occupancy,
+            "maxoccupancy" => $maxoccupancy,
+            "marginal" => $marginal,
+            "hysteres" => $hysteres,
+            "active" => $active
         );
  
         array_push($parking_arr["records"], $parking_area);
@@ -54,7 +66,6 @@ if($num > 0){
 
     http_response_code(200);
     echo json_encode($parking_arr);
-    die();
 } else {
     http_response_code(404);
     echo json_encode(
