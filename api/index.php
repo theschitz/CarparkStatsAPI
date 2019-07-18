@@ -1,4 +1,9 @@
 <?php
+//debug -->
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+//debug <--
+#TODO: add authentication https://www.codeofaninja.com/2018/09/rest-api-authentication-example-php-jwt-tutorial.html
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -21,6 +26,7 @@ if (count($_GET) == 0) {
 }
 
 #TODO: Sanitize user input
+//htmlspecialchars(strip_tags($keywords));
 #TODO: Collect params
 
 $database = new Database();
