@@ -25,11 +25,11 @@ if (count($_GET) == 0) {
 }
 $valid_parms = array("limit", "fromDatetime", "toDatetime", "name", "orderby");
 $filters = array();
-foreach (array_keys($_POST) as $key => $value) {
+foreach ($_GET as $key => $value) {
     if (!in_array($key, $valid_parms)) {        
         http_response_code(400);
         echo json_encode(
-            array("message" => "Parameter {$key} not supported.")
+            array("message" => "Parameter [{$key}] not supported.")
         );
         die();
     } else {
@@ -40,6 +40,7 @@ foreach (array_keys($_POST) as $key => $value) {
 $database = new Database();
 $db = $database->getConnection();
 $parking = new Parking($db);
+$parking->setFilters($filters);
 $stmt = $parking->read();
 $num = $stmt->rowCount();
  
