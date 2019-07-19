@@ -21,6 +21,7 @@ if (count($_GET) == 0) {
     echo json_encode(
         array("message" => "No parameters supplied.")
     );
+    die();
 }
 $valid_parms = array("limit", "fromDatetime", "toDatetime", "name", "orderby");
 $filters = array();
@@ -52,7 +53,7 @@ if($num > 0){
         extract($row);
         $parking_area = array(
             "id" => $id,
-            "datatime" => $datetime,
+            "datetime" => $datetime,
             "name" => $name,
             "occupancy" => $occupancy,
             "maxoccupancy" => $maxoccupancy,
