@@ -20,6 +20,13 @@ class Parking{
         $this->conn = $db;
     }
 
+    public function setFilters($filters) {
+        if (array_key_exists("limit", $filters)) {
+            if ($filters["limit"] < $this->limit)
+                $this->limit = $filters["limit"];
+        }
+    }
+
     function read(){
         $query = "SELECT * FROM {$this->table_name} LIMIT {$this->limit}";
         $stmt = $this->conn->prepare($query);
