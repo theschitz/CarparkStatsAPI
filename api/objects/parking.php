@@ -5,6 +5,7 @@ class Parking{
     private $conn;
     private $table_name = "parkering_jkpg";
     private $limit = 5000;
+    private $orderby = "id";
  
     // object properties
     public $id;
@@ -22,13 +23,21 @@ class Parking{
 
     public function setFilters($filters) {
         if (array_key_exists("limit", $filters)) {
-            if ($filters["limit"] < $this->limit)
+            if ($filters["limit"] < $this->limit) {
                 $this->limit = $filters["limit"];
+            }
         }
+        if (array_key_exists("orderby", $filters)) {
+            if (array_key_exists($filters["orderby"], array("name", "occupancy"))) {
+                $this->orderby = $filters["orderby"];
+            }
+        }
+        #TODO: add filter for fromDatetime, toDatetime and name.
+        #TODO: Filter for ID?
     }
 
     function read(){
-        $query = "SELECT * FROM {$this->table_name} LIMIT {$this->limit}";
+        $query = "SELECT * FROM {$this->table_name} ORDER BY {$this->orderby} LIMIT {$this->limit}";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
