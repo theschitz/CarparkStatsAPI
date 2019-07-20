@@ -84,7 +84,7 @@ class Parking {
         return $stmt;
     }
     
-    function invalidParam($param, $value) {
+    private function invalidParam($param, $value) {
         http_response_code(400);
         echo json_encode(
             array("message" => "Parameter {$param} has an invalid value: {$value}.")
