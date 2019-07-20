@@ -9,6 +9,9 @@ class Parking {
     private $toDT = null;
     private $parkingName = "%";
     private $validOrderByColumns = ["name" => 0, "occupancy" => 0];
+    private $availableParkingAreas = ["Spira", "P-hus Biblioteket", "Östra Torget",
+                                        "P-hus Atollen", "P-garage Järnbäraren", "P-hus Per Brahe",
+                                        "P-hus Smedjan", "Västra Torget", "P-hus Sesam"	];
  
     // object properties
     public $id;
@@ -62,10 +65,7 @@ class Parking {
             }
         }
         if (array_key_exists("name", $filters)) {
-            #TODO:  Some parking areas has changed their name over the years
-            #       [] Data correction?
-            #       [] Find a good way to store existing names.
-            if (in_array($filters["name"], array("Västra Torget", "Östra Torget", "Järnbäraren", "Atollen", "Biblioteket", "Per Brahe", "Sesam", "Smedjan", "Spira"))) {
+            if (in_array($filters["name"], $this->availableParkingAreas)) {
                 $this->parkingName = $filters["name"];
             } else {
                 $this->invalidParam("name", $filters["name"]);
