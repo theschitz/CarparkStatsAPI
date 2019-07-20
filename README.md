@@ -7,7 +7,7 @@ The website parkeringjonkoping.se tracks available parking spaces in the town of
 
 So you might have seen these signs at parking lots that shows you the number of free parking spaces. There are a few of these in the central parts of Jönköping. This project started out some years back when the question was raised if the data served for the signs, and also partially for the municipalitys webpage, was available through an open API. [Jönköpings Kommun](https://www.jonkoping.se/) said no and showed little interest in our call for open data. 
 
-So I did a little digging and found the the source of the data. Not really public or open but accessible. My first idea was to create a [Twitterbot](https://twitter.com/pplatsjkpg) and then also the site [parkeringjonkoping.se](https://www.parkeringjonkoping.se). Back then there was this debate over how hard it was to find a parking space in the city but the data often told another story. Looking at momentary data seldom shows you the big picture, so I started storing the data with the intent of sharing it through an API at some point. Well now that time has come and I share not only the data but also the source code so that the API can be easily improved.
+So I did a little digging and found the the source of the data. Not really public or open but accessible. My first idea was to create a [Twitterbot](https://twitter.com/pplatsjkpg) and then also the site [parkeringjonkoping.se](https://www.parkeringjonkoping.se). Back then there was this debate over how hard it was to find a parking space in the city (it's probably still going on) but the data often told another story. Looking at momentary data seldom shows you the big picture, so I started storing the data with the intent of sharing it through an API at some point. Well now that time has come and I share not only the data but also the source code so that the API can be easily improved.
 
 ## Disclaimer
 
@@ -30,7 +30,7 @@ See [Code samples](#codesamples)
 
 ### Query Parameters
 
-At least one uery parameter must be sent. This is 
+At least one query parameter must be sent. The simplest would be 'limit'.
 
 |Parameter      |Type       |Description|
 |---------------|-----------|-----------|
