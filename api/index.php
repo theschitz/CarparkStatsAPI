@@ -10,9 +10,9 @@ include_once 'config/database.php';
 include_once 'objects/parking.php';
 
 if (!isset($_GET)) {
-    http_response_code(400);
+    http_response_code(405);
     echo json_encode(
-        array("message" => "Onlty GET requests allowed.")
+        array("message" => "Only GET requests accepted.")
     );
     die();
 }
@@ -21,14 +21,15 @@ if (count($_GET) == 0) {
     echo json_encode(
         array("message" => "No parameters supplied.")
     );
+    die();
 }
 $valid_parms = array("limit", "fromDatetime", "toDatetime", "name", "orderby");
 $filters = array();
-foreach (array_keys($_POST) as $key => $value) {
-    if (!in_array($key, $valid_parms)) {        
+foreach ($_GET as $key => $value) {
+    if (!in_array($key, $valid_parms)) {
         http_response_code(400);
         echo json_encode(
-            array("message" => "Parameter {$key} not supported.")
+            array("message" => "Parameter [{$key}] not supported.")
         );
         die();
     } else {
@@ -39,6 +40,7 @@ foreach (array_keys($_POST) as $key => $value) {
 $database = new Database();
 $db = $database->getConnection();
 $parking = new Parking($db);
+$parking->setFilters($filters);
 $stmt = $parking->read();
 $num = $stmt->rowCount();
  
@@ -48,11 +50,10 @@ if($num > 0){
     // fetch() is faster than fetchAll()
     // http://stackoverflow.com/questions/2770630/pdofetchall-vs-pdofetch-in-a-loop
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        // extract row this will make $row['name'] to just $name only
         extract($row);
         $parking_area = array(
             "id" => $id,
-            "datatime" => $datetime,
+            "datetime" => $datetime,
             "name" => $name,
             "occupancy" => $occupancy,
             "maxoccupancy" => $maxoccupancy,

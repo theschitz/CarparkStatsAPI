@@ -1,4 +1,6 @@
 <?php
+include_once('config.php');
+
 class Database {
     private $host = "";
     private $db_name = "";
@@ -6,8 +8,8 @@ class Database {
     private $password = "";
     public $conn;
 
-    public function getConnection(){
-        $this->conn = null;
+    public function getConnection() {        
+        $this->configure();
         try{
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->exec("set names utf8");
@@ -17,6 +19,14 @@ class Database {
  
         return $this->conn;  
     }
+    
+    private function configure() {
+        $cfg = parse_ini_file(CONFIG_INI_PATH, true);
+        $this->conn = null;        
+        $this->host = $cfg["database"]["host"];
+        $this->db_name = $cfg["database"]["db_name"];
+        $this->username = $cfg["database"]["username"];
+        $this->password = $cfg["database"]["password"];
+    }
 }
-
 ?>
