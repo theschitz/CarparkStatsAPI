@@ -7,7 +7,8 @@ class Parking {
     private $orderby = "id";
     private $fromDT = null;
     private $toDT = null;
-    private $parkingName = "%"; 
+    private $parkingName = "%";
+    private $validOrderByColumns = ["name" => 0, "occupancy" => 0];
  
     // object properties
     public $id;
@@ -40,7 +41,7 @@ class Parking {
             }
         }
         if (array_key_exists("orderby", $filters)) {
-            if (array_key_exists($filters["orderby"], array("name"=>0, "occupancy"=>0))) {
+            if (array_key_exists($filters["orderby"], $this->validOrderByColumns)) {
                 $this->orderby = $filters["orderby"];
             }
         }
