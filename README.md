@@ -1,5 +1,5 @@
 # CarparkStatsAPI
-API for reading historic data collected for [parkeringjonkoping.se](https://www.parkeringjonkoping.se) accessible through parkeringjonkoping.se/api/.
+API for reading historic data collected for [parkeringjonkoping.se](https://www.parkeringjonkoping.se) accessible through [parkeringjonkoping.se/api/](https://www.parkeringjonkoping.se/api/).
 
 ## About
 
