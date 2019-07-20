@@ -26,7 +26,7 @@ if (count($_GET) == 0) {
 $valid_parms = array("limit", "fromDatetime", "toDatetime", "name", "orderby");
 $filters = array();
 foreach ($_GET as $key => $value) {
-    if (!in_array($key, $valid_parms)) {        
+    if (!in_array($key, $valid_parms)) {
         http_response_code(400);
         echo json_encode(
             array("message" => "Parameter [{$key}] not supported.")
