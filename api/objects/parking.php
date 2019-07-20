@@ -1,11 +1,13 @@
 <?php
-class Parking{
+class Parking {
  
-    // database connection and table name
     private $conn;
     private $table_name = "parkering_jkpg";
     private $limit = 5000;
     private $orderby = "id";
+    private $fromDT = null;
+    private $toDT = null;
+    private $parkingName = "%"; 
  
     // object properties
     public $id;
@@ -19,6 +21,8 @@ class Parking{
  
     public function __construct($db){
         $this->conn = $db;
+        $this->fromDT = new DateTime("2000-01-01");
+        $this->toDT = new DateTime("2999-01-01");
     }
 
     public function setFilters($filters) {
@@ -32,12 +36,22 @@ class Parking{
                 $this->orderby = $filters["orderby"];
             }
         }
-        #TODO: add filter for fromDatetime, toDatetime and name.
-        #TODO: Filter for ID?
+        if (array_key_exists("fromDatetime", $filters)) {
+            $this->fromDT = $filters["fromDatetime"];
+        }
+        if (array_key_exists("toDatetime", $filters)) {
+            $this->toDT = $filters["toDatetime"];
+        }
+        if (array_key_exists("name", $filters)) {
+            $this->parkingName = $filters["name"];
+        }
     }
 
     function read(){
-        $query = "SELECT * FROM {$this->table_name} ORDER BY {$this->orderby} LIMIT {$this->limit}";
+        $query = "SELECT * FROM {$this->table_name}
+                  WHERE (datetime BETWEEN {$this->fromDT} AND {$this->toDT})
+                  AND name LIKE {$this->parkingName}
+                  ORDER BY {$this->orderby} LIMIT {$this->limit}";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
