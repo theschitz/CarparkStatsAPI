@@ -1,2 +1,3 @@
 .vscode/sftp.json
 dev/config.ini.php
+api/config/config.php
