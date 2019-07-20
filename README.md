@@ -14,7 +14,7 @@ GET api/?<params>
 |limit          |integer    |Limits the number of rows returned.|
 |fromDatetime   |datetime   |Returns result where *datetime* > fromDatetime.|
 |toDatetime     |datetime   |Returns result where *datetime* < toDatetime.|
-|name           |string     |Returns result where *name* = name.|
+|name           |string     |Returns result where *name* = name. See [Parking Areas](#parkingareas).|
 |orderby        |string     |Orders descending by given column name of either *name* or *occupancy*.|
 |               |           |                                                                       |
 
@@ -34,3 +34,16 @@ Description of table.
 |hysteres	    |int(11)	|NO		|NULL	|	    |               |
 |active	        |tinyint(1)	|NO		|NULL   |       |               |
 |               |           |       |       |       |               |
+
+## <a name="parkingareas"></a>Parking Areas
+|Name                   |
+|-----------------------|
+|Spira	                |
+|P-hus Biblioteket	    |
+|Östra Torget	        |
+|P-hus Atollen	        |
+|P-garage Järnbäraren	|
+|P-hus Per Brahe	    |
+|P-hus Smedjan	        |
+|Västra Torget	        |
+|P-hus Sesam	        |
