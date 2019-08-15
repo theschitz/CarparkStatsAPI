@@ -34,7 +34,7 @@ At least one query parameter must be sent. The simplest would be 'limit'.
 
 |Parameter      |Type       |Description|
 |---------------|-----------|-----------|
-|limit          |integer    |Limits the number of rows returned. Max is 5000.|
+|limit          |integer    |Limits the number of rows returned. Max limit value is 5000.|
 |fromDatetime   |datetime   |Returns result where *datetime* > fromDatetime.|
 |toDatetime     |datetime   |Returns result where *datetime* < toDatetime.|
 |name           |string     |Returns result where *name* = name. See [Parking Areas](#parkingareas).|
