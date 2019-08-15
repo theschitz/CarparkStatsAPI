@@ -73,7 +73,7 @@ class Parking {
         }
     }
 
-    function read(){
+    function read() {
         $query = "SELECT * FROM {$this->table_name}
                   WHERE (datetime BETWEEN '{$this->fromDT}' AND '{$this->toDT}')
                   AND name LIKE '{$this->parkingName}'
@@ -83,7 +83,44 @@ class Parking {
         $stmt->execute();
         return $stmt;
     }
+
+    function create() {
+        # TODO: Add permissions/ Restrict access.
+        $query = "INSERT INTO {$this->table_name} 
+                  SET name=:name, 
+                      datetime=:datetime, 
+                      occupancy=:occupancy, 
+                      maxoccupancy=:maxoccupancy, 
+                      marginal=:marginal,
+                      hysteres=:hysteres,
+                      active=:active";
     
+        $stmt = $this->conn->prepare($query);
+    
+        // sanitize
+        $this->name=htmlspecialchars(strip_tags($this->name));
+        $this->datetime=htmlspecialchars(strip_tags($this->datetime));
+        $this->occupancy=htmlspecialchars(strip_tags($this->occupancy));
+        $this->maxoccupancy=htmlspecialchars(strip_tags($this->maxoccupancy));
+        $this->marginal=htmlspecialchars(strip_tags($this->marginal));
+        $this->hysteres=htmlspecialchars(strip_tags($this->hysteres));
+        $this->active=htmlspecialchars(strip_tags($this->active));
+    
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":datetime", $this->datetime);
+        $stmt->bindParam(":occupancy", $this->occupancy);
+        $stmt->bindParam(":maxoccupancy", $this->maxoccupancy);
+        $stmt->bindParam(":marginal", $this->marginal);
+        $stmt->bindParam(":hysteres", $this->hysteres);
+        $stmt->bindParam(":active", $this->active);
+    
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+        
+    }
+
     private function invalidParam($param, $value) {
         http_response_code(400);
         echo json_encode(

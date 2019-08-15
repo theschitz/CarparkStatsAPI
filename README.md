@@ -70,13 +70,13 @@ At least one query parameter must be sent. The simplest would be 'limit'.
 |-----------------------|
 |Spira	                |
 |P-hus Biblioteket	    |
-|Östra Torget	        |
+|Östra Torget	          |
 |P-hus Atollen	        |
-|P-garage Järnbäraren	|
-|P-hus Per Brahe	    |
+|P-garage Järnbäraren	  |
+|P-hus Per Brahe	      |
 |P-hus Smedjan	        |
 |Västra Torget	        |
-|P-hus Sesam	        |
+|P-hus Sesam	          |
 
 ## <a name="codesamples"></a>Code Samples
 
@@ -91,7 +91,7 @@ $request->setMethod(HTTP_METH_GET);
 
 $request->setQueryData(array(
   'limit' => '5000',
-  'fromDatetime' => '2019-01-01%2000:00:00',
+  'fromDatetime' => '2019-01-01 00:00:00',
   'name' => 'Spira'
 ));
 
@@ -120,7 +120,7 @@ import requests
 url = "http://parkeringjonkoping.se/api/"
 
 querystring = { "limit":"5000",
-                "fromDatetime":"2019-01-01%2000:00:00",
+                "fromDatetime":"2019-01-01 00:00:00",
                 "name":"Spira" }
 
 headers = {

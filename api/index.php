@@ -57,7 +57,7 @@ function getFilterArray($valid_params) {
             );
             die();
         } else {
-            $filters[$key] = htmlspecialchars(strip_tags($value));
+            $f[$key] = htmlspecialchars(strip_tags($value));
         }
     }
     return $f;
