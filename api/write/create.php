@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST"); #TODO: Post or get??
+header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"); # TODO authorization??
 header("Cache-Control: no-cache");
@@ -9,6 +9,9 @@ header("Pragma: no-cache");
 
 include_once 'config/database.php';
 include_once 'objects/parking.php';
+
+#TODO: Test
+#TODO: Add some kind of Authorization
 
 $database = new Database();
 $db = $database->getConnection(); 
@@ -40,7 +43,7 @@ foreach ($data as $p) {
     else{
         //503 service unavailable
         http_response_code(503);
-        echo json_encode(array("message" => "Unable to create entry."));
+        echo json_encode(array("message" => $parking->conn->errorInfo()));
     }
 }
 
@@ -59,13 +62,4 @@ function data_is_incomplete($data) {
     }
     return false;
 }
-//gammal kod.---->>>>>>>
-
-
-/* Validate Token */
-if(!isset($_GET['token'])) {
-	echo('Error: Not allowed.');
-	die();
-}
-# TODO: Bring back token?
 ?>
